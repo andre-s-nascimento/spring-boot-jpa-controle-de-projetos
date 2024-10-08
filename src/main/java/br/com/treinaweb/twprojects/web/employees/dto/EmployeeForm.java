@@ -35,4 +35,6 @@ public class EmployeeForm {
     private LocalDate resignationDate;
 
     private AddressForm address;
+
+    private Long positionId;
 }

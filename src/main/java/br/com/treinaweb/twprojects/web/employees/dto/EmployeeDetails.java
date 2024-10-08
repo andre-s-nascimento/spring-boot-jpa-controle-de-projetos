@@ -28,4 +28,6 @@ public class EmployeeDetails {
     private LocalDate resignationDate;
 
     private String address;
+
+    private String position;
 }

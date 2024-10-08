@@ -1,0 +1,70 @@
+package br.com.treinaweb.twprojects.web.employees.mappers;
+
+import org.springframework.stereotype.Component;
+
+import br.com.treinaweb.twprojects.core.models.Employee;
+import br.com.treinaweb.twprojects.core.utils.StringUtils;
+import br.com.treinaweb.twprojects.web.employees.dto.EmployeeDetails;
+import br.com.treinaweb.twprojects.web.employees.dto.EmployeeForm;
+import br.com.treinaweb.twprojects.web.employees.dto.EmployeeListItem;
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class EmployeeMapperImpl implements EmployeeMapper {
+
+    private final AddressMapper addressMapper;
+
+    @Override
+    public Employee toEmployee(EmployeeForm employeeForm) {
+        return Employee.builder()
+                .name(employeeForm.getName())
+                .email(employeeForm.getEmail())
+                .phone(StringUtils.cleanPhone(employeeForm.getPhone()))
+                .cpf(StringUtils.cleanCpf(employeeForm.getCpf()))
+                .birthDate(employeeForm.getBirthDate())
+                .hireDate(employeeForm.getHireDate())
+                .resignationDate(employeeForm.getResignationDate())
+                .address(addressMapper.toAddress(employeeForm.getAddress()))
+                .build();
+    }
+
+    @Override
+    public EmployeeForm toEmployeeForm(Employee employee) {
+        return EmployeeForm.builder()
+                .name(employee.getName())
+                .email(employee.getEmail())
+                .phone(StringUtils.formatPhone(employee.getPhone()))
+                .cpf(StringUtils.formatCpf(employee.getCpf()))
+                .birthDate(employee.getBirthDate())
+                .hireDate(employee.getHireDate())
+                .resignationDate(employee.getResignationDate())
+                .address(addressMapper.toAddressForm(employee.getAddress()))
+                .build();
+    }
+
+    @Override
+    public EmployeeListItem toEmployeeListItem(Employee employee) {
+        return EmployeeListItem.builder()
+                .id(employee.getId())
+                .name(employee.getName())
+                .email(employee.getEmail())
+                .phone(StringUtils.formatPhone(employee.getPhone()))
+                .build();
+    }
+
+    @Override
+    public EmployeeDetails toEmployeeDetails(Employee employee) {
+        return EmployeeDetails.builder()
+                .name(employee.getName())
+                .email(employee.getEmail())
+                .phone(StringUtils.formatPhone(employee.getPhone()))
+                .cpf(StringUtils.formatCpf(employee.getCpf()))
+                .birthDate(employee.getBirthDate())
+                .hireDate(employee.getHireDate())
+                .resignationDate(employee.getResignationDate())
+                .address(addressMapper.formatAddress(employee.getAddress()))
+                .build();
+    }
+
+}

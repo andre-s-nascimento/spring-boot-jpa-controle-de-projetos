@@ -51,15 +51,16 @@ public class ProjectController {
 
     @GetMapping("/create")
     public ModelAndView create() {
-
         var clients = clientRepository.findAll();
-        var employees = employeeRepository.findAll();
+        var team = employeeRepository.findTeam();//.findByPositionNameNot("Gerente de Projeto");
+        var managers = employeeRepository.findManagers();//.findByPositionName("Gerente de Projeto");
+
         var model = Map.of(
                 "pageTitle", "Cadastro de Projeto",
                 "projectForm", new ProjectForm(),
                 "clients", clients,
-                "team", employees,
-                "managers", employees);
+                "team", team,
+                "managers", managers);
 
         return new ModelAndView("projects/form", model);
     }

@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.treinaweb.twprojects.core.models.Project;
 
-public interface ProjectRepository extends JpaRepository<Project, Long>{
-    
-    @EntityGraph(attributePaths = {"client", "manager"})
+public interface ProjectRepository extends JpaRepository<Project, Long> {
+
+    @EntityGraph(attributePaths = { "client", "manager" })
     List<Project> findAll();
 
-    @EntityGraph(attributePaths = {"client", "manager", "team", "team.position"})
+    @EntityGraph(attributePaths = { "client", "manager", "team", "team.position" })
     Optional<Project> findById(Long id);
 }
